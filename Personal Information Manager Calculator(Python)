@@ -1,0 +1,250 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyO3o1i/Du7e7L/3R/hDu5Fu",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/ashwiniumande02-lab/-Chatbot-using-NLP-project-with-Python-NLTK-Flask-deployed-as-a-small-web-app-./blob/main/Personal%20Information%20Manager%20Calculator(Python)\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import json\n",
+        "\n",
+        "class PersonalInfoManager:\n",
+        "    def __init__(self, filename=\"pim_data.json\"):\n",
+        "        self.filename = filename\n",
+        "        self.data = []\n",
+        "        self.load()\n",
+        "\n",
+        "    def add_person(self, name, age, city, hobbies):\n",
+        "        person = {\n",
+        "            \"id\": len(self.data) + 1,\n",
+        "            \"name\": name,\n",
+        "            \"age\": age,\n",
+        "            \"city\": city,\n",
+        "            \"hobbies\": hobbies\n",
+        "        }\n",
+        "        self.data.append(person)\n",
+        "        self.save()\n",
+        "\n",
+        "    def save(self):\n",
+        "        with open(self.filename, \"w\") as f:\n",
+        "            json.dump(self.data, f, indent=4)\n",
+        "\n",
+        "    def load(self):\n",
+        "        try:\n",
+        "            with open(self.filename, \"r\") as f:\n",
+        "                self.data = json.load(f)\n",
+        "        except:\n",
+        "            self.data = []\n",
+        "\n",
+        "    def show_all(self):\n",
+        "        if not self.data:\n",
+        "            print(\"No records found.\")\n",
+        "            return\n",
+        "\n",
+        "        for p in self.data:\n",
+        "            print(f\"\"\"\n",
+        "------------------------------\n",
+        "ID     : {p['id']}\n",
+        "Name   : {p['name']}\n",
+        "Age    : {p['age']}\n",
+        "City   : {p['city']}\n",
+        "Hobbies: {\", \".join(p['hobbies'])}\n",
+        "------------------------------\n",
+        "\"\"\")"
+      ],
+      "metadata": {
+        "id": "ufz7F_UnuAlR"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pim = PersonalInfoManager()\n",
+        "print(\"PIM ready!\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "tO12RsjyuI-Q",
+        "outputId": "76bca5ce-f17b-478b-d246-2c335a581445"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "PIM ready!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pim.add_person(\n",
+        "    name=\"Ashwini Umande\",\n",
+        "    age=22,\n",
+        "    city=\"Pune\",\n",
+        "    hobbies=[\"Coding\", \"Reading\", \"Music\"]\n",
+        ")\n",
+        "\n",
+        "pim.add_person(\n",
+        "    name=\"Ravi Kumar\",\n",
+        "    age=30,\n",
+        "    city=\"Delhi\",\n",
+        "    hobbies=[\"Chess\", \"Cooking\"]\n",
+        ")\n",
+        "\n",
+        "print(\"Data added!\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "uJ6Zb6S0uSH4",
+        "outputId": "59799c90-806c-440f-d34f-0d1b002b5bdf"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Data added!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pim.show_all()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "1QqRC9qxuXC3",
+        "outputId": "67d181c5-e5e7-4926-bf61-2eff1a09a325"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "------------------------------\n",
+            "ID     : 1\n",
+            "Name   : Ashwini Umande\n",
+            "Age    : 22\n",
+            "City   : Pune\n",
+            "Hobbies: Programming, Daancing, Playing Piano\n",
+            "------------------------------\n",
+            "\n",
+            "\n",
+            "------------------------------\n",
+            "ID     : 2\n",
+            "Name   : Ashwini Umande\n",
+            "Age    : 22\n",
+            "City   : Pune\n",
+            "Hobbies: Coding, Reading, Music\n",
+            "------------------------------\n",
+            "\n",
+            "\n",
+            "------------------------------\n",
+            "ID     : 3\n",
+            "Name   : Ravi Kumar\n",
+            "Age    : 30\n",
+            "City   : Delhi\n",
+            "Hobbies: Chess, Cooking\n",
+            "------------------------------\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def calculator():\n",
+        "    print(\"Simple Calculator\")\n",
+        "    print(\"Operations: +, -, *, /\")\n",
+        "\n",
+        "    a = float(input(\"Enter first number: \"))\n",
+        "    op = input(\"Enter operation: \")\n",
+        "    b = float(input(\"Enter second number: \"))\n",
+        "\n",
+        "    if op == \"+\":\n",
+        "        print(\"Result:\", a + b)\n",
+        "    elif op == \"-\":\n",
+        "        print(\"Result:\", a - b)\n",
+        "    elif op == \"*\":\n",
+        "        print(\"Result:\", a * b)\n",
+        "    elif op == \"/\":\n",
+        "        if b == 0:\n",
+        "            print(\"Error: Cannot divide by zero\")\n",
+        "        else:\n",
+        "            print(\"Result:\", a / b)\n",
+        "    else:\n",
+        "        print(\"Invalid operation\")\n",
+        "\n",
+        "calculator()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "f-wQzz4suikR",
+        "outputId": "62fe1e45-735f-4bd0-a718-c6ab19fcee09"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Simple Calculator\n",
+            "Operations: +, -, *, /\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "mIpoKeKZu92p"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
